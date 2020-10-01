@@ -1,0 +1,6 @@
+.fibonacci series-> 0 ,1,1,2,3,5,8....
+    print 10 numbers in fib series
+.find the sum of digits of a number
+          123 -> 1+2+3->6
+.find the reverse of a number
+            123 -> 321
