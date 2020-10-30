@@ -1,0 +1,17 @@
+def calc():
+    x=15
+    y=90
+
+    def add():
+        z=x+y
+        return z
+
+    def sub():
+        z=x-y
+        return z
+
+    return add,sub
+
+p,q = calc()
+print(p())
+print(q())
