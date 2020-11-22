@@ -14,7 +14,11 @@ img=pygame.image.load("space.jpg")
 img=pygame.transform.scale(img,(width,height))
 img2=pygame.image.load("spacecraft.png")
 img2=pygame.transform.scale(img2,(craftwidth,craftheight))
-
+enemyWidth = 100
+enemyHeight = 50
+enemyImg = pygame.image.load('enemy1.png')
+enemyImg = pygame.transform.scale(enemyImg,(enemyWidth,enemyHeight))
+enemyImg = pygame.transform.rotate(enemyImg,180)
 gameboard=pygame.display.set_mode((width,height))
 
 white=255,255,255
@@ -28,15 +32,6 @@ def score(counter):
     text=font.render(f"Score:{counter}",True,red)
     gameboard.blit(text,(50,50))
 
-def shoot():
-    x=200
-    y=620
-    for i in range(y):
-        pygame.draw.rect(gameboard,white,(x,y,30,30))
-        y-=1
-
-
-  
 
 def spacecraft():
     x=200
@@ -50,6 +45,17 @@ def spacecraft():
     bulletY = y+20
     shoot = False
     moveBullet=0
+    
+    
+    enemyList = []
+    nrow = 5
+    ncol = width//enemyWidth
+
+    for i in range(nrow):
+        for j in range(ncol):
+            enemy = (enemyWidth+45)*j,(enemyHeight+45)*i
+            enemyList.append(enemy)
+            
     while True:
         if shoot==False:
             bulletX = x+(craftwidth//2)-(bulletWidth//2)
@@ -57,6 +63,11 @@ def spacecraft():
         bulletRect = pygame.draw.rect(gameboard,red,[bulletX,bulletY,bulletWidth,bulletHeight])
         spacecraft=pygame.Rect(x,y,craftwidth,craftheight)        
         gameboard.blit(img2,(x,y))
+
+        for i in range(len(enemyList)):
+            gameboard.blit(enemyImg,enemyList[i])
+            
+            
         
         for event in pygame.event.get():
             if event.type==pygame.QUIT:
@@ -122,34 +133,8 @@ def start():
         gameboard.blit(text,(100,100))
         pygame.display.flip()
 
-def Gameover():
-    font=pygame.font.SysFont(None,200)
-    text=font.render("Game Over",True,red)
-    font2=pygame.font.SysFont(None,50)
-    text2=font2.render("If you want to repeat press SpaceBar or press q to exit",True,red)
-    
-    while True:
-        for event in pygame.event.get():
-            if event.type==pygame.QUIT:
-                pygame.quit()
-                quit()
-
-            if event.type == pygame.KEYDOWN:
-                if event.key==pygame.K_q:
-                    pygame.quit()
-                    quit()
-
-                if event.key==pygame.K_SPACE:
-                    main()
-
-        gameboard.blit(text,(70,100))
-        gameboard.blit(text2,(100,250))
-        pygame.display.flip()
-    
-def Lives():
-    font=pygame.SysFont(None,40)
-    text=font.render(f"Score:{counter}",True,red)
-    #pygame.blit(text,(50,50))     
+ 
+     
 
 start()
 
