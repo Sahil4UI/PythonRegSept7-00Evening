@@ -50,11 +50,14 @@ def spacecraft():
     enemyList = []
     nrow = 5
     ncol = width//enemyWidth
+    enemyRectList = []
 
     for i in range(nrow):
         for j in range(ncol):
             enemy = (enemyWidth+45)*j,(enemyHeight+45)*i
             enemyList.append(enemy)
+            enemyRect = pygame.Rect((enemyWidth+45)*j,(enemyHeight+45)*i,enemyWidth,enemyHeight)
+            enemyRectList.append(enemyRect)
             
     while True:
         if shoot==False:
@@ -93,8 +96,15 @@ def spacecraft():
         x+=movex
         bulletY += moveBullet
         
-        
-
+        for i in range(len(enemyRectList)):
+            if enemyRectList[i].colliderect(bulletRect):
+                del enemyRectList[i]
+                del enemyList[i]
+                moveBullet=0
+                bulletY = y+20
+                bulletX = x+(craftwidth//2)-(bulletWidth//2)
+                shoot = False
+                break
         if x<0:
             x=950
 
@@ -104,9 +114,10 @@ def spacecraft():
         if bulletY<0:
             moveBullet=0
             bulletY=y+20
-            bulletX = x+(craftwidth//2)-(bulletWidth//2)
+            #bulletX = x+(craftwidth//2)-(bulletWidth//2)
             shoot=False
-            
+
+        
             
         pygame.display.flip()
     
