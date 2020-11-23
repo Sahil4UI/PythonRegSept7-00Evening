@@ -10,8 +10,12 @@ craftheight=80
 
 
 
-img=pygame.image.load("space.jpg")
+img=pygame.image.load("back1.jpg")
 img=pygame.transform.scale(img,(width,height))
+img01=pygame.image.load("back1.jpg")
+img01=pygame.transform.scale(img01,(width,height))
+
+
 img2=pygame.image.load("spacecraft.png")
 img2=pygame.transform.scale(img2,(craftwidth,craftheight))
 enemyWidth = 100
@@ -34,6 +38,11 @@ def score(counter):
 
 
 def spacecraft():
+    b_x1=0
+    b_y1=0
+    b_x2=0
+    b_y2=-height
+    
     x=200
     y=620
     counter=0
@@ -62,7 +71,8 @@ def spacecraft():
     while True:
         if shoot==False:
             bulletX = x+(craftwidth//2)-(bulletWidth//2)
-        gameboard.blit(img,(0,0))
+        gameboard.blit(img,(b_x1,b_y1))
+        gameboard.blit(img01,(b_x2,b_y2))
         bulletRect = pygame.draw.rect(gameboard,red,[bulletX,bulletY,bulletWidth,bulletHeight])
         spacecraft=pygame.Rect(x,y,craftwidth,craftheight)        
         gameboard.blit(img2,(x,y))
@@ -70,7 +80,13 @@ def spacecraft():
         for i in range(len(enemyList)):
             gameboard.blit(enemyImg,enemyList[i])
             
-            
+        if b_y1 > height:
+            b_y1=-height
+        if b_y2 >height:
+            b_y2=-height
+
+        b_y1+=5
+        b_y2+=5
         
         for event in pygame.event.get():
             if event.type==pygame.QUIT:
