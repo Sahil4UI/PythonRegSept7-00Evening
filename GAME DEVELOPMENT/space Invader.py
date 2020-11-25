@@ -8,8 +8,8 @@ height=700
 craftwidth=60
 craftheight=80
 
-
-
+clock=pygame.time.Clock()
+FPS=120
 img=pygame.image.load("back1.jpg")
 img=pygame.transform.scale(img,(width,height))
 img01=pygame.image.load("back1.jpg")
@@ -57,14 +57,14 @@ def spacecraft():
     
     
     enemyList = []
-    nrow = 5
+    nrow = 4
     ncol = width//enemyWidth
     enemyRectList = []
 
     for i in range(nrow):
         for j in range(ncol):
             enemy = (enemyWidth+45)*j,(enemyHeight+45)*i
-            enemyList.append(enemy)
+            enemyList.append(list(enemy))
             enemyRect = pygame.Rect((enemyWidth+45)*j,(enemyHeight+45)*i,enemyWidth,enemyHeight)
             enemyRectList.append(enemyRect)
             
@@ -79,6 +79,13 @@ def spacecraft():
 
         for i in range(len(enemyList)):
             gameboard.blit(enemyImg,enemyList[i])
+            enemyList[i][1] +=2
+            enemyRectList[i].move(enemyList[i][0],enemyList[i][1])
+
+            if enemyList[i][1] > height:
+                enemyList[i][1]=0
+                
+    
             
         if b_y1 > height:
             b_y1=-height
@@ -158,6 +165,7 @@ def start():
                     
         gameboard.blit(text2,(200,400))
         gameboard.blit(text,(100,100))
+        clock.tick(FPS)
         pygame.display.flip()
 
  
